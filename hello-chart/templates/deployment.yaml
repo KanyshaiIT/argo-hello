@@ -8,6 +8,9 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  volumeMounts:
+  - name: html
+    mountPath: /usr/share/nginx/html
   selector:
     matchLabels:
       {{- include "hello-chart.selectorLabels" . | nindent 6 }}
@@ -32,6 +35,10 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: html
+        configMap:
+          name: {{ include "hello-chart.fullname" . }}-html
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
