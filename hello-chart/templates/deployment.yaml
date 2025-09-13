@@ -24,7 +24,8 @@ spec:
               protocol: TCP
           volumeMounts:               # ✅ mount ConfigMap here
             - name: html
-              mountPath: /usr/share/nginx/html
+              mountPath: /usr/share/nginx/html/index.html
+	      subPath: index.html
       volumes:                        # ✅ define ConfigMap volume
         - name: html
           configMap:
